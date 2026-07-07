@@ -96,6 +96,14 @@ directory:
   base_url: "https://directory.andrew.cmu.edu"
   search_endpoint: "/index.cgi"
 
+cmucourses:
+  # ScottyLabs course-tool API — CROSS-VALIDATION ONLY (locked Week-1 decision:
+  # never a primary source). Used in Week 4 to verify faculty resolution:
+  # its schedules carry instructor FULL names ("Last, First") per semester,
+  # independent of our directory pipeline. Verified 2026-07-07:
+  #   GET /courses?courseID=15-112&courseID=...&schedules=true (batchable)
+  base_url: "https://course.apis.scottylabs.org"
+
 wayback_prefix: "http://web.archive.org/web"
 
 scraping:

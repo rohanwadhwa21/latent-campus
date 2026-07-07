@@ -36,15 +36,15 @@
 "Statistics": ["36"]  # seen 43x
 "Chemical Engineering": ["06"]  # seen 42x
 "Biomedical Engineering": ["42"]  # seen 42x
-"Athletics & Physical Education": ["69"]  # TODO verify code  # seen 42x
+"Athletics & Physical Education": ["69"]  # code verified via course titles 2026-07-07  # seen 42x
 "Art": ["60"]  # seen 39x
 "History": ["79"]  # seen 38x
-"Ni: Neuroscience Institute": ["86"]  # TODO verify code  # seen 35x
+"Ni: Neuroscience Institute": ["86"]  # code verified via course titles 2026-07-07  # seen 35x
 "Heinz Masters Programs": ["90", "91", "92", "93", "94", "95"]  # seen 34x
 "Design": ["51"]  # seen 33x
-"Integrated Innovation Institute": ["49"]  # TODO verify code  # seen 31x
+"Integrated Innovation Institute": ["49"]  # code verified via course titles 2026-07-07  # seen 31x
 "Cm Institute for Strategy and Technology": ["84"]  # seen 29x
-"Ni Neuroscience Institute": ["86"]  # TODO verify code  # seen 28x
+"Ni Neuroscience Institute": ["86"]  # code verified via course titles 2026-07-07  # seen 28x
 "SDS: Social and Decision Sciences": ["88"]  # seen 27x
 "SDS: Social & Decision Sciences": ["88"]  # seen 26x
 "Philosophy": ["80"]  # seen 25x
@@ -58,7 +58,7 @@
 "Robotics Institute - NREC": ["16"]  # seen 15x
 "INI:Information Networking Institute": ["14"]  # seen 15x
 "NREC: National Robotics Engineering Center": ["16"]  # seen 14x
-"Integrated Innovation for Products and Services": ["49"]  # TODO verify code  # seen 14x
+"Integrated Innovation for Products and Services": ["49"]  # code verified via course titles 2026-07-07  # seen 14x
 "Tepper School of Business Masters Program": ["45", "46", "47", "70", "73"]  # seen 14x
 "INI - Information Networking Institute": ["14"]  # seen 11x
 "Is Program in Dietrich": ["67"]  # seen 11x
@@ -66,10 +66,10 @@
 "EPP Engineering & Technology Innovation (E&tim)": ["19"]  # seen 6x
 "IS Program in Dietrich": ["67"]  # seen 5x
 "Ini/ms": ["14"]  # seen 4x
-"Silicon Valley - Integrated Innovation": ["49"]  # TODO verify code  # seen 4x
-"Iii Online Education": ["49"]  # TODO verify code  # seen 4x
+"Silicon Valley - Integrated Innovation": ["49"]  # code verified via course titles 2026-07-07  # seen 4x
+"Iii Online Education": ["49"]  # code verified via course titles 2026-07-07  # seen 4x
 "Heinz Academic Programs": ["90", "91", "92", "93", "94", "95"]  # seen 4x
-"Naval Rotc": ["32"]  # TODO verify code  # seen 4x
+"Naval Rotc": ["32"]  # code verified via course titles 2026-07-07  # seen 4x
 "Heinz Teaching Assistants": ["90", "91", "92", "93", "94", "95"]  # seen 3x
 "Nrec: National Robotics Engineering Center": ["16"]  # seen 1x
 "Computer Science Department": ["15"]  # seen 0x
