@@ -20,6 +20,7 @@ it enters the atlas.
   -> data/canonical/crossval_refuted.csv  (adjudication queue)
 """
 
+import argparse
 import json
 import urllib.parse
 from collections import defaultdict
@@ -79,21 +80,60 @@ def split_cc_name(name: str) -> tuple[str, str]:
     return last.strip().casefold(), first.strip().casefold()
 
 
+# Common English nickname <-> formal pairs. Without this, "Bill Nace" vs
+# FCE's "William Nace" counts as a refutation and we measure our string
+# matching instead of our entity resolution. Symmetric at lookup time.
+NICKNAMES = {
+    "william": {"bill", "billy", "will", "liam"}, "robert": {"bob", "bobby", "rob"},
+    "michael": {"mike"}, "david": {"dave"}, "james": {"jim", "jimmy"},
+    "thomas": {"tom", "tome", "tomé"}, "nicholas": {"nick"}, "sandra": {"sandy"},
+    "richard": {"rick", "dick", "rich"}, "elizabeth": {"liz", "beth", "betsy"},
+    "katherine": {"kate", "katie", "kathy", "kat"}, "margaret": {"peggy", "meg"},
+    "jennifer": {"jen", "jenny"}, "joseph": {"joe"}, "daniel": {"dan", "danny"},
+    "matthew": {"matt"}, "christopher": {"chris"}, "anthony": {"tony"},
+    "edward": {"ed", "ted", "ned"}, "andrew": {"andy", "drew"}, "samuel": {"sam"},
+    "benjamin": {"ben"}, "alexander": {"alex"}, "patricia": {"pat", "trish"},
+    "susan": {"sue", "suzy"}, "deborah": {"deb", "debbie"}, "gregory": {"greg"},
+    "ronald": {"ron"}, "kenneth": {"ken"}, "steven": {"steve"}, "stephen": {"steve"},
+    "lawrence": {"larry"}, "gerald": {"jerry"}, "donald": {"don"},
+    "timothy": {"tim"}, "jonathan": {"jon"}, "frederick": {"fred"},
+}
+
+
+def _names_agree(a: str, b: str) -> bool:
+    """Two first-name tokens refer to the same person? Handles exact,
+    truncation prefixes (len>=3), nicknames, and bare initials ('j.'/'j')."""
+    a, b = a.rstrip("."), b.rstrip(".")
+    if not a or not b:
+        return False
+    if a == b:
+        return True
+    if len(a) == 1 or len(b) == 1:  # initial vs full name
+        return a[0] == b[0]
+    if len(a) >= 3 and len(b) >= 3 and (a.startswith(b) or b.startswith(a)):
+        return True
+    return b in NICKNAMES.get(a, set()) or a in NICKNAMES.get(b, set())
+
+
 def verdict(surname: str, display_name: str, cc_names: set[str]) -> str:
-    """Compare our resolved person against cmucourses' names for the slot."""
-    ours_first = display_name.split()[0].casefold() if display_name else ""
+    """Compare our resolved person against cmucourses' names for the slot.
+
+    cc's first name is compared against ALL our given-name tokens, because
+    directory display names include goes-by-middle-name people
+    ("J. David Riel" is cc's "Riel, James")."""
+    our_tokens = [t.casefold() for t in display_name.split()] if display_name else []
     same_surname = [split_cc_name(n)[1] for n in cc_names
                     if split_cc_name(n)[0] == surname.casefold()]
     if not same_surname:
         return "no_data"
     for cc_first in same_surname:
-        a, b = cc_first.split()[0] if cc_first else "", ours_first
-        if a and b and (a == b or a.startswith(b) or b.startswith(a)):
+        cc_tok = cc_first.split()[0] if cc_first else ""
+        if any(_names_agree(cc_tok, t) for t in our_tokens):
             return "confirmed"
     return "refuted"
 
 
-def main() -> None:
+def main(apply_policy: bool = False) -> None:
     edges = pl.read_parquet(CANONICAL_DIR / "course_faculty.parquet")
     fac = pl.read_parquet(CANONICAL_DIR / "faculty.parquet")
     edges = edges.join(
@@ -132,6 +172,38 @@ def main() -> None:
     refuted.write_csv(path)
     print(f"\n{len(refuted)} distinct refuted (surname, person, course) rows -> {path}")
 
+    if apply_policy:
+        apply_surgical_cut(out)
+
+
+def apply_surgical_cut(out: pl.DataFrame) -> None:
+    """Acceptance policy (2026-07-07): dept-unique edges keep everything except
+    individually-refuted rows; global-unique (78% precision — fails the ~99%
+    gate) keeps ONLY independently-confirmed rows. The uncut table is preserved
+    as course_faculty_full.parquet; faculty.parquet shrinks to people with
+    surviving edges."""
+    keep = out.filter(
+        ((pl.col("match_method") == "dept-unique") & (pl.col("verdict") != "refuted"))
+        | ((pl.col("match_method") == "global-unique") & (pl.col("verdict") == "confirmed"))
+    )
+    edge_cols = ["offering_id", "course_id", "semester", "faculty_id",
+                 "surname_token", "dept_code", "match_method"]
+    full = out.select(edge_cols + ["verdict"])
+    full.write_parquet(CANONICAL_DIR / "course_faculty_full.parquet")
+    keep.select(edge_cols + ["verdict"]).write_parquet(CANONICAL_DIR / "course_faculty.parquet")
+
+    fac = pl.read_parquet(CANONICAL_DIR / "faculty.parquet")
+    kept_ids = set(keep.get_column("faculty_id"))
+    fac_kept = fac.filter(pl.col("faculty_id").is_in(kept_ids))
+    fac_kept.write_parquet(CANONICAL_DIR / "faculty.parquet")
+    print(f"\nAPPLIED: {len(keep)}/{len(full)} edges kept "
+          f"({dict(keep.group_by('match_method').len().iter_rows())}); "
+          f"faculty {len(fac)} -> {len(fac_kept)}; uncut table saved to "
+          f"course_faculty_full.parquet")
+
 
 if __name__ == "__main__":
-    main()
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--apply", action="store_true",
+                    help="apply the acceptance policy: filter edges + faculty in place")
+    main(apply_policy=ap.parse_args().apply)

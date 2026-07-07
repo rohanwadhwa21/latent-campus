@@ -280,3 +280,35 @@ explaining the reversal.
 - **GATE before accepting:** user reviews the 8 TODO mappings + labels
   `data/canonical/faculty_label_sample.csv` (100 pairs, ~99% precision target,
   dept-unique and global-unique evaluated separately).
+
+### Week 4 acceptance via cmucourses cross-validation (2026-07-07)
+
+- **The 4 uncertain dept codes were verified from our own course titles** (49=III
+  "Integrated Product Conceptualization", 86=Neuroscience "Brain Computation",
+  69=PhysEd "Badminton", 32=Naval ROTC "Intro to Naval Science"). *Lesson:* the dataset
+  often contains its own verification signal.
+- **Precision measured by CROSS-VALIDATION against cmucourses (ScottyLabs), not the
+  100-pair hand-label sample.** Their FCE-derived schedules carry instructor FULL names
+  per (course, semester) — an independent pipeline from our directory resolution, and the
+  locked Week-1 decision explicitly reserves cmucourses for cross-validation. Every one of
+  the 23,082 edges was checked (`scripts/crossval_faculty.py`; ~190 cached batch requests
+  to course.apis.scottylabs.org). Verdicts: confirmed (first name agrees — with a
+  nickname table, initial matching, and all-given-token comparison, else "Bill Nace" vs
+  "William Nace" counts as an error) / refuted (surname present, first name disagrees) /
+  no_data. ~33% of edges verifiable.
+- **Result: dept-unique 97.1% pessimistic precision (6,395 confirmed / 188 refuted);
+  global-unique 78.5% (689 / 189) — FAILS the ~99% gate.** Global-unique's failure mode is
+  exactly as theorized: the sole directory candidate is often not the actual instructor
+  (who left CMU or isn't Faculty/Staff). Real dept-unique collisions exist too (e.g. the
+  instructor "Peng, Yang" resolved to Richard Peng — two same-surname people around SCS).
+- **ACCEPTED POLICY — "surgical cut" (⚠ pending user ratification; user was AFK, applied
+  as the recommended default; fully reversible from course_faculty_full.parquet):**
+  dept-unique keeps all edges EXCEPT the 188 individually-refuted; global-unique keeps
+  ONLY the 689 independently-confirmed. **Final: 20,660 edges (70.8% token coverage),
+  1,511 faculty nodes.** Every known-bad edge removed; every surviving global-unique edge
+  independently proven. Edges now carry a `verdict` column (confirmed/no_data) as
+  evidence. `crossval_refuted.csv` (121 rows) remains for optional adjudication —
+  adjudicated nickname false-refutes could be restored later.
+- **Bonus discovery:** cmucourses has instructor names for F25/S26 (from FCE) — a candidate
+  source for the recent-semester TEACHES gap, though the locked decision keeps it
+  cross-validation-only; revisit deliberately if F25+ edges become necessary.

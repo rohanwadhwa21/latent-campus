@@ -200,15 +200,20 @@ capped), dept map drafted (66 mapped / 374 null, 8 `# TODO verify code`), resolu
 nodes** (1,257 Faculty + 439 Staff; 1,023 with building codes for Wk5). Spot checks pass.
 Full numbers in DECISIONS.md "Week 4 first full run".
 
-**TO CLOSE WEEK 4 — needs the USER (the acceptance gate):**
-1. Review the 8 `# TODO verify code` entries + umbrella mappings in
-   `configs/dept_directory_map.yaml`, then rerun `make resolve-faculty` if edited.
-2. Hand-label `data/canonical/faculty_label_sample.csv` (100 pairs; verdict column;
-   ~99% precision target, judge dept-unique / global-unique separately — drop
-   global-unique from edges if it fails).
-3. Optionally triage `faculty_ambiguous.csv` (592 pairs: 468 ambiguous + 124 capped).
-4. Record the precision result in DECISIONS.md → Week 4 CLOSED → start Week 5 (buildings;
-   Overpass Task-0 already verified, see below).
+**ACCEPTANCE DONE VIA CROSS-VALIDATION (2026-07-07)** — see DECISIONS.md "Week 4
+acceptance". All 23,082 edges checked against cmucourses' independent FCE full names
+(`scripts/crossval_faculty.py`): dept-unique 97.1% pessimistic precision, global-unique
+78.5% (failed). **Surgical cut applied (`--apply`): FINAL = 20,660 edges (70.8% of
+tokens), 1,511 faculty nodes**; edges carry a crossval `verdict` column; uncut audit copy
+in `course_faculty_full.parquet`. The 4 uncertain dept-map codes verified via course
+titles. The 100-pair hand-label sample is now OPTIONAL (superseded by full crossval).
+
+**WEEK 4 effectively CLOSED, pending user ratification of the surgical-cut policy**
+(user was AFK; recommended default applied; reversible). Remaining optional: adjudicate
+`crossval_refuted.csv` (121 rows) to restore nickname false-refutes; triage
+`faculty_ambiguous.csv` (592 pairs). **Next: Week 5 — buildings/PLG/BID** (Overpass
+Task-0 already verified, see below; 1,023 faculty have building codes for
+faculty→building edges).
 
 ⚠ **DISK: 3.0 GiB free / 99% (2026-07-07)** — and at this level iCloud began **evicting
 the repo's own source files** (133 dataless files across src/scripts/tests/configs/data
