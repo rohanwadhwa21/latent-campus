@@ -1,0 +1,13 @@
+# Semesters to scrape, most recent first.
+# Codes follow CMU SOC convention: F=Fall, S=Spring + 2-digit year.
+# Summers deliberately excluded. Mini-semesters are an attribute on
+# offerings, not separate semester codes.
+#
+# Week 1 scope: ONLY the first entry (S26). Week 2 expands to all six.
+semesters:
+  - S26
+  - F25
+  - S25
+  - F24
+  - S24
+  - F23

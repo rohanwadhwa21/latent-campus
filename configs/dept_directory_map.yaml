@@ -1,0 +1,455 @@
+# HR department name (verbatim, as printed on directory detail pages) ->
+# list of SOC dept codes, or null for non-teaching units. Names not listed
+# never contribute a department match (people resolve via global-uniqueness only).
+#
+# DRAFTED programmatically 2026-07-07 from all 3,140 fetched candidates;
+# counts = how many candidate records carry the name. NEEDS USER REVIEW —
+# especially the '# TODO verify' code guesses. Umbrella units map to a code
+# SET (Heinz -> all Heinz codes; Tepper incl. 73 Economics — no separate
+# Economics HR unit exists). College-wide course codes (07/38/39/62/65/66/
+# 98/99) intentionally have NO HR mapping: deans-office staff mustn't create
+# false dept-unique matches; those courses resolve via global-unique only.
+
+# --- teaching units (mapped) ---
+"Heinz General & Administrative": ["90", "91", "92", "93", "94", "95"]  # seen 196x
+"ECE: Electrical & Computer Engineering": ["18"]  # seen 161x
+"Tepper School of Business": ["45", "46", "47", "70", "73"]  # seen 146x
+"Robotics Institute": ["16"]  # seen 127x
+"Mechanical Engineering": ["24"]  # seen 107x
+"HCII: Human Computer Interaction Institute": ["05"]  # seen 95x
+"S3D Software and Societal Systems Department": ["17"]  # seen 95x
+"LTI: Language Technologies Institute": ["11"]  # seen 72x
+"Mathematical Sciences": ["21"]  # seen 63x
+"Biological Sciences": ["03"]  # seen 62x
+"Language Technologies Institute": ["11"]  # seen 60x
+"Psychology": ["85"]  # seen 59x
+"Physics": ["33"]  # seen 56x
+"Architecture": ["48"]  # seen 56x
+"Chemistry": ["09"]  # seen 55x
+"English": ["76"]  # seen 52x
+"MLD: Machine Learning Department": ["10"]  # seen 51x
+"Computational Biology Department": ["02"]  # seen 51x
+"MSE: Materials Science & Engineering": ["27"]  # seen 51x
+"Modern Languages": ["82"]  # seen 51x
+"Languages, Cultures & Applied Linguistic": ["82"]  # seen 50x
+"CEE: Civil & Environmental Engineering": ["12"]  # seen 46x
+"Statistics": ["36"]  # seen 43x
+"Chemical Engineering": ["06"]  # seen 42x
+"Biomedical Engineering": ["42"]  # seen 42x
+"Athletics & Physical Education": ["69"]  # TODO verify code  # seen 42x
+"Art": ["60"]  # seen 39x
+"History": ["79"]  # seen 38x
+"Ni: Neuroscience Institute": ["86"]  # TODO verify code  # seen 35x
+"Heinz Masters Programs": ["90", "91", "92", "93", "94", "95"]  # seen 34x
+"Design": ["51"]  # seen 33x
+"Integrated Innovation Institute": ["49"]  # TODO verify code  # seen 31x
+"Cm Institute for Strategy and Technology": ["84"]  # seen 29x
+"Ni Neuroscience Institute": ["86"]  # TODO verify code  # seen 28x
+"SDS: Social and Decision Sciences": ["88"]  # seen 27x
+"SDS: Social & Decision Sciences": ["88"]  # seen 26x
+"Philosophy": ["80"]  # seen 25x
+"Meim:Master of Entertainment Industry Mgmt (Heinz)": ["90", "91", "92", "93", "94", "95"]  # seen 25x
+"ETC: Entertainment Technology Center": ["53"]  # seen 24x
+"Rwanda - Information and Communication Technology": ["04"]  # seen 21x
+"Rwanda - ICT": ["04"]  # seen 18x
+"EPP: Engineering & Public Policy": ["19"]  # seen 16x
+"EPP:Engineering & Public Policy": ["19"]  # seen 16x
+"Dietrichheinz - Undergraduate Is Department": ["67"]  # seen 16x
+"Robotics Institute - NREC": ["16"]  # seen 15x
+"INI:Information Networking Institute": ["14"]  # seen 15x
+"NREC: National Robotics Engineering Center": ["16"]  # seen 14x
+"Integrated Innovation for Products and Services": ["49"]  # TODO verify code  # seen 14x
+"Tepper School of Business Masters Program": ["45", "46", "47", "70", "73"]  # seen 14x
+"INI - Information Networking Institute": ["14"]  # seen 11x
+"Is Program in Dietrich": ["67"]  # seen 11x
+"MSPPM: Public Policy & Management - Dc Location (Heinz)": ["90", "91", "92", "93", "94", "95"]  # seen 9x
+"EPP Engineering & Technology Innovation (E&tim)": ["19"]  # seen 6x
+"IS Program in Dietrich": ["67"]  # seen 5x
+"Ini/ms": ["14"]  # seen 4x
+"Silicon Valley - Integrated Innovation": ["49"]  # TODO verify code  # seen 4x
+"Iii Online Education": ["49"]  # TODO verify code  # seen 4x
+"Heinz Academic Programs": ["90", "91", "92", "93", "94", "95"]  # seen 4x
+"Naval Rotc": ["32"]  # TODO verify code  # seen 4x
+"Heinz Teaching Assistants": ["90", "91", "92", "93", "94", "95"]  # seen 3x
+"Nrec: National Robotics Engineering Center": ["16"]  # seen 1x
+"Computer Science Department": ["15"]  # seen 0x
+"Robotics Institute - Campus": ["16"]  # seen 0x
+"Drama": ["54"]  # seen 0x
+"Music": ["57"]  # seen 0x
+"Music Extension Division": ["57"]  # seen 0x
+
+# --- non-teaching / admin / Qatar / SEI units (null) ---
+"Campus Engagement": null  # seen 46x
+"SCS Dean's Office": null  # seen 38x
+"Dietrich Dean's Office": null  # seen 33x
+"MCS Dean's Office": null  # seen 30x
+"Fms Operations": null  # seen 28x
+"Community Health & Well-Being": null  # seen 24x
+"Liberal & Social Sciences - Qatar": null  # seen 23x
+"MCS Deans Office": null  # seen 22x
+"CIT Dean's Office": null  # seen 22x
+"University Police": null  # seen 20x
+"CFA Dean's Office": null  # seen 20x
+"Student Affairs Business Operations": null  # seen 19x
+"Cylab": null  # seen 19x
+"Division of Enrollment Management": null  # seen 18x
+"Office of the Vice President for Research": null  # seen 18x
+"CFA Deans Office": null  # seen 17x
+"Arts (Qatar)": null  # seen 16x
+"Dietrich Deans Office": null  # seen 15x
+"PSC - Pittsburgh Supercomputing Center": null  # seen 15x
+"HR Staffing": null  # seen 12x
+"SEI Cyber Mission Readiness": null  # seen 12x
+"Dean of Student Affairs": null  # seen 12x
+"Temporary Employment Service (HR)": null  # seen 12x
+"SEI Risk and Resilience": null  # seen 11x
+"Systems Architecture (Comp Services)": null  # seen 11x
+"Systems Infrastructure (Comp Services)": null  # seen 11x
+"Dining Administration": null  # seen 11x
+"Parking and Transportation Services": null  # seen 11x
+"Advancement Info Services (Univ Advancement)": null  # seen 11x
+"Marketing & Communications": null  # seen 11x
+"VP - Marketing & Communications": null  # seen 11x
+"Business Administration (Qatar)": null  # seen 11x
+"Business Administration - Qatar": null  # seen 11x
+"Computer Science (Qatar)": null  # seen 11x
+"Computer Science - Qatar": null  # seen 11x
+"Tepper Faculty Affairs": null  # seen 10x
+"Tepper School of Business Deputy Dean": null  # seen 10x
+"Robotics Finance & Administration": null  # seen 10x
+"Counseling & Psychological Services": null  # seen 10x
+"Music Prep School": null  # seen 10x
+"Integrative Design, Arts and Technology": null  # seen 10x
+"Health Department": null  # seen 9x
+"SEI Threat and Vulnerability Analysis": null  # seen 9x
+"Office of the Provost": null  # seen 9x
+"Provost Office Operations": null  # seen 9x
+"CIT Research": null  # seen 9x
+"Biology - Qatar": null  # seen 9x
+"Biological Sciences (Qatar)": null  # seen 9x
+"Administration - Qatar": null  # seen 9x
+"SEI Cyber Security Foundations": null  # seen 8x
+"Career Center": null  # seen 8x
+"Student Academic Success Center": null  # seen 8x
+"SCS Deans Office-College": null  # seen 8x
+"The Center for Student Diversity Inclusion": null  # seen 7x
+"SEI OCOS IT Services": null  # seen 7x
+"Acc:Engg Research Accelerator": null  # seen 7x
+"University Libraries-Dean's Office": null  # seen 7x
+"Ais (Univ Advancement)": null  # seen 7x
+"Sciences (Qatar)": null  # seen 7x
+"Development (Univ Advancement)": null  # seen 7x
+"Facilities, Infrastructure, & Risk Mgmt": null  # seen 7x
+"Campus Design and Facility Development": null  # seen 7x
+"Cost Analysis, Sponsored Projects, Property Accounting": null  # seen 7x
+"Eberly Center": null  # seen 6x
+"Eberly Center, Teaching Excellence & Educational Innovation": null  # seen 6x
+"SEI Ssd Transforing Sftwr Acquisition Policy": null  # seen 6x
+"The Simon Initiative": null  # seen 6x
+"SEI CERT Tva Vulnerability Analysis": null  # seen 6x
+"Shuttle Service": null  # seen 6x
+"Fms Operations - Second Shift": null  # seen 6x
+"Information Systems Program - Qatar": null  # seen 6x
+"Information Systems (Qatar)": null  # seen 6x
+"University Stores - Total": null  # seen 6x
+"Business Innovation Office (Comp Services)": null  # seen 6x
+"Advancement Events (Univ Advancement)": null  # seen 6x
+"University Events and Engagement": null  # seen 6x
+"AVP-Development (Univ Advancement)": null  # seen 6x
+"Dietrich Academic Advisory Center": null  # seen 6x
+"Vice Provost for Education": null  # seen 6x
+"International Education": null  # seen 5x
+"SCS Deans Office-Executive": null  # seen 5x
+"Sams": null  # seen 5x
+"University Libraries-Research & Academic Services": null  # seen 5x
+"Vice President for Research": null  # seen 5x
+"Swartz Center for Entrepreneurship": null  # seen 5x
+"SEI CERT Crr Cybersecurity Assurance": null  # seen 5x
+"Housing Services Administration": null  # seen 5x
+"Enterprise Information Systems (Comp Services)": null  # seen 5x
+"Enterprise Applications (Comp Services)": null  # seen 5x
+"Enterprise Risk Management (Erm) Services": null  # seen 5x
+"SEI Ai Do": null  # seen 5x
+"University Libraries-Deans Office": null  # seen 5x
+"Administrative Enterprise Operations (Comp Services)": null  # seen 5x
+"Client Experience (Comp Services)": null  # seen 5x
+"Client Services (Comp Services)": null  # seen 5x
+"SEI Ssd Enabling Mission Capability at Scale": null  # seen 5x
+"University Stores Administration": null  # seen 5x
+"AIS (Univ Advancement)": null  # seen 5x
+"President's Office": null  # seen 5x
+"Presidents Office": null  # seen 5x
+"Tepper Marketing & Communications": null  # seen 5x
+"SEI Monitoring and Response": null  # seen 5x
+"Business Support Services": null  # seen 5x
+"Undergraduate Admissions": null  # seen 4x
+"SEI CERT Csf Data Science": null  # seen 4x
+"Hunt Institute for Botanical Documentation": null  # seen 4x
+"Benefits": null  # seen 4x
+"SEI Ssd Continuous Deployment of Capability": null  # seen 4x
+"CIT Marketing and Communications": null  # seen 4x
+"SEI Do Administration": null  # seen 4x
+"Mechanical Engineering Technical Service": null  # seen 4x
+"Associate Vice President for Research & Academic Admin": null  # seen 4x
+"SCS Computing Facility": null  # seen 4x
+"Alumni and Constituent Engagement": null  # seen 4x
+"Alumni and Constituent Engagement Admin": null  # seen 4x
+"Fms Operations - Craig St": null  # seen 4x
+"Student Support Resources": null  # seen 4x
+"Cmu Center for Leadership Studies": null  # seen 4x
+"Tepper Do Development": null  # seen 4x
+"Fms Operations - East Zone": null  # seen 4x
+"University Libraries-Collections & Info Access Services": null  # seen 4x
+"Ctr for Tech Transfer & Enterprise Creation": null  # seen 4x
+"Technology Enhanced Facilities (Comp Services)": null  # seen 4x
+"Chief Information Officer (Comp Services)": null  # seen 4x
+"Software Management": null  # seen 4x
+"Associate Dean for Research": null  # seen 4x
+"SCS Computing": null  # seen 4x
+"Tepper Research Centers": null  # seen 4x
+"Fms University Engineer": null  # seen 4x
+"Engineering Business Operations Office": null  # seen 4x
+"University Libraries-Administration": null  # seen 4x
+"Cmu Washington Semester Program": null  # seen 4x
+"CIT Deans Office": null  # seen 3x
+"SEI Ai Mission Innovation Lab": null  # seen 3x
+"SEI Ssd Ssa Administration": null  # seen 3x
+"Center for Shared Prosperity": null  # seen 3x
+"Institutional Research and Analysis": null  # seen 3x
+"SEI CERT Cmr Fo": null  # seen 3x
+"SEI CERT Crr Fo": null  # seen 3x
+"Controller": null  # seen 3x
+"HR Benefits": null  # seen 3x
+"Fms Operations - Storeroom/inventory": null  # seen 3x
+"SEI Do HR": null  # seen 3x
+"SEI Facilities": null  # seen 3x
+"SEI Ai Secure Lab": null  # seen 3x
+"Acc: Critical Tech Analytics Collaborative (Ctac)": null  # seen 3x
+"Application Development (Comp Services)": null  # seen 3x
+"SEI Software Solutions Division": null  # seen 3x
+"FMS Operations - Life Safety": null  # seen 3x
+"VP - University Advancement": null  # seen 3x
+"VP-University Advancement (Univ Advancement)": null  # seen 3x
+"Univ Libraries - Archives Special Collections": null  # seen 3x
+"University Libraries - Research Curation": null  # seen 3x
+"Tech Enhanced Facilities Ops Dprtmntl (Comp Services)": null  # seen 3x
+"Postal Services": null  # seen 3x
+"SEI Ssd Sdw Dynamic Reconfigurable Mission Systems": null  # seen 3x
+"SEI Contracts and Procurement": null  # seen 3x
+"Silicon Valley Admin": null  # seen 3x
+"Fms Operations - Structural Shop": null  # seen 3x
+"SCS Development": null  # seen 3x
+"Csd Business Office": null  # seen 3x
+"Fms Operations - Management": null  # seen 3x
+"CIT Undergraduate Studies": null  # seen 3x
+"Vice Provost-Diversity Equity and Inclusion": null  # seen 3x
+"Office for Institutional Equity and Title Ix": null  # seen 3x
+"Chief Information Office (Comp Services)": null  # seen 3x
+"SEI OCOS Communication Services": null  # seen 3x
+"AVP Campaign Development": null  # seen 3x
+"Campaign (Univ Advancement)": null  # seen 3x
+"Cost Analysis": null  # seen 3x
+"VP - Finance": null  # seen 3x
+"Mscf Ny (Tepper)": null  # seen 3x
+"SEI CERT Cmr Mod/sim and Exercise": null  # seen 3x
+"Sponsored Project Accounting - Spa": null  # seen 3x
+"SEI CERT Cmr Research and Prototypes": null  # seen 3x
+"Media Services (Comp Services)": null  # seen 3x
+"Iii Edie": null  # seen 3x
+"Center for the Arts in Society": null  # seen 2x
+"CIT Faculty and Graduate Affairs": null  # seen 2x
+"Mba 3YR Flex Program (Tepper)": null  # seen 2x
+"Financial Reporting": null  # seen 2x
+"Fms Operations - Life Safety": null  # seen 2x
+"Fms Operations - Forbes": null  # seen 2x
+"SEI Ssd Program Development and Satellite Office": null  # seen 2x
+"SEI Ssd Business Development Admin": null  # seen 2x
+"Tepper Do Faculty Support": null  # seen 2x
+"EH&S:Environmental Health & Safety": null  # seen 2x
+"Enterprise Risk Management (ERM) Services": null  # seen 2x
+"SEI CERT Crr ETVM": null  # seen 2x
+"Fms Operations - West Campus": null  # seen 2x
+"Administrative Enterprise Applications (Comp Services)": null  # seen 2x
+"Student Leadership, Involvement, & Civic Engagement": null  # seen 2x
+"Foundation Relations (Univ Advancement)": null  # seen 2x
+"SEI Ssd Sdw Rapid Verification and Smart Testing": null  # seen 2x
+"Tepper Do Finance": null  # seen 2x
+"FMS Operations - East Zone": null  # seen 2x
+"Tepper School of Business Phd": null  # seen 2x
+"Tepper Phd Administration": null  # seen 2x
+"SEI OCOS Security Services": null  # seen 2x
+"AVP Global Strategic Init & Instit Accr": null  # seen 2x
+"Investment Office": null  # seen 2x
+"Pre-College Administration": null  # seen 2x
+"SEI Ssd Ssa Acquisition Policy Practice and Integration": null  # seen 2x
+"Childrens School": null  # seen 2x
+"SEI Ssd Enabling Mission Capability At Scale": null  # seen 2x
+"SEI OCOS Transition Services": null  # seen 2x
+"SEI Purchasing": null  # seen 2x
+"SEI CERT Mr Situational Awareness": null  # seen 2x
+"Donor Relations and Constituent Engagement": null  # seen 2x
+"Donor Relations": null  # seen 2x
+"Eh&s:Environmental Health & Safety": null  # seen 2x
+"Silicon Valley - INI": null  # seen 2x
+"INI - Pittsburgh-Silicon Valley": null  # seen 2x
+"Fms Operations - Gardeners": null  # seen 2x
+"Planned Giving (Univ Advancement)": null  # seen 2x
+"Gift Planning (Univ Advancement)": null  # seen 2x
+"Univ Libraries - Open Source Program Office": null  # seen 2x
+"Tepper Accelerate Leadership Center": null  # seen 2x
+"Enrollment Systems": null  # seen 2x
+"SEI Ssd Sdw Administration": null  # seen 2x
+"Office of Ug Research and Scholar Development": null  # seen 2x
+"Csd Education-Undergraduate": null  # seen 2x
+"SCS Undergraduate Education": null  # seen 2x
+"Research Seed Funding - Qatar": null  # seen 2x
+"Internal Research (Qatar)": null  # seen 2x
+"Office of the General Counsel": null  # seen 2x
+"Joseph Ballay Center for Design Fusion": null  # seen 2x
+"Ul - Administration, Planning & Assessment": null  # seen 2x
+"Financial Services Group (Comp Services)": null  # seen 2x
+"Center for Business Engagement": null  # seen 2x
+"Dietrich Computing": null  # seen 2x
+"Disaster Recovery & Business Continuity": null  # seen 2x
+"University Center Administration": null  # seen 2x
+"Dean's Office - Qatar": null  # seen 2x
+"SEI CERT Csf Applied Systems Group": null  # seen 2x
+"Cmu Online Operating Unit Administration": null  # seen 2x
+"SEI CERT Csf Fo": null  # seen 2x
+"SEI CERT Tva Data Curation": null  # seen 2x
+"Library (Qatar)": null  # seen 2x
+"Studio for Creative Inquiry": null  # seen 2x
+"SEI CERT Cmr Operation Readiness Evaluat": null  # seen 2x
+"SEI Cert Do": null  # seen 2x
+"SEI CERT Do Division Admin": null  # seen 2x
+"Community Life": null  # seen 2x
+"SEI Ai Frontier Lab": null  # seen 2x
+"Tepper School of Business Undergraduate Programs": null  # seen 2x
+"Tepper Ba Administration": null  # seen 2x
+"SEI CERT Mr Security Operations": null  # seen 2x
+"SEI Ssd Rfhas Platform Engineering": null  # seen 2x
+"SEI OCOS Pde": null  # seen 2x
+"Annual Giving (Univ Advancement)": null  # seen 2x
+"Fms Operations - Housing Maintenance": null  # seen 2x
+"FMS Operations - Management": null  # seen 2x
+"SEI Ebs": null  # seen 2x
+"Payroll Services": null  # seen 1x
+"Student Accounts Office": null  # seen 1x
+"MI Stores": null  # seen 1x
+"SEI Ssd Rfhas Mission - Driven Formal Assurance": null  # seen 1x
+"Fms Enterprise Space Data Mgmt": null  # seen 1x
+"FMS General Business Operations": null  # seen 1x
+"ECE Computing": null  # seen 1x
+"SEI OCOS Web Services": null  # seen 1x
+"SEI CERT Cmr Immersive Learning & Assess": null  # seen 1x
+"International Finance": null  # seen 1x
+"FMS Operations - Housing Maintenance": null  # seen 1x
+"Treasurer's Office": null  # seen 1x
+"Treasurers Office": null  # seen 1x
+"Records Administration": null  # seen 1x
+"Tepper Masters Student Services": null  # seen 1x
+"Tepper Career Opportunity Center": null  # seen 1x
+"University Registrars Office": null  # seen 1x
+"Manufacturing Futures Institute": null  # seen 1x
+"Student Affairs Information Technology": null  # seen 1x
+"Ueis - Marketing & Communication": null  # seen 1x
+"SEI OCOS Dc Operations": null  # seen 1x
+"Vice Provost for Faculty": null  # seen 1x
+"Student Financial Services": null  # seen 1x
+"Vice Provost, Institutional Effectiveness & Pl": null  # seen 1x
+"Mba Flexplus Distance Learning (Tepper)": null  # seen 1x
+"SEI Ssd Ssa Applied Measurement and Experimentation": null  # seen 1x
+"Drama - Costume Shop": null  # seen 1x
+"Cylab PDL": null  # seen 1x
+"Dietrich College Advancement": null  # seen 1x
+"Information Security Office (Comp Services)": null  # seen 1x
+"Insurance Services": null  # seen 1x
+"Student Affairs (Qatar)": null  # seen 1x
+"Communication Services (Comp Services)": null  # seen 1x
+"Advancement Resources and Engagement Programs": null  # seen 1x
+"SEI Analytics": null  # seen 1x
+"SEI Finance": null  # seen 1x
+"Learning Technologies (Comp Services)": null  # seen 1x
+"Professional Development Services": null  # seen 1x
+"FMS Operations - Second Shift": null  # seen 1x
+"Heinz Deans Office": null  # seen 1x
+"Heinz Dean's Office": null  # seen 1x
+"Pitt - Cmu Mr Center": null  # seen 1x
+"Cmu - Africa Programs-Rwanda": null  # seen 1x
+"Finance Training and Communications": null  # seen 1x
+"SCS Ai Undergrad Program": null  # seen 1x
+"Central Operations": null  # seen 1x
+"University Projects - Ps": null  # seen 1x
+"Marketing & Public Relations (Qatar)": null  # seen 1x
+"SEI Cs Innovations and Initiatives": null  # seen 1x
+"SEI CERT Cii Business Development": null  # seen 1x
+"SEI 3.0 Fabs Contracts": null  # seen 1x
+"Campus Services Administration": null  # seen 1x
+"Campus Services IT Department": null  # seen 1x
+"Associate Dean - Mgmt & Ops (Qatar)": null  # seen 1x
+"SEI CERT Crr Products": null  # seen 1x
+"Education Office (Qatar)": null  # seen 1x
+"Constituent Development (Univ Advancement)": null  # seen 1x
+"Constituent Development": null  # seen 1x
+"Fms Operations - Project Mgmnt": null  # seen 1x
+"FMS Operations - Project MGMNT": null  # seen 1x
+"Network Operations (Comp Services)": null  # seen 1x
+"Network & Communications Services (Comp Services)": null  # seen 1x
+"Advancement Communications": null  # seen 1x
+"Advancement Communications and Marketing": null  # seen 1x
+"SEI Ssd Rfhas Administration": null  # seen 1x
+"Tepper Masters Administration": null  # seen 1x
+"Research Systems and Operations": null  # seen 1x
+"Icti Information Communication Technology Institute": null  # seen 1x
+"Icti Phase Iii Admin": null  # seen 1x
+"Micv Lab": null  # seen 1x
+"Sponsored Project Accounting - SPA": null  # seen 1x
+"Outreach Programs (Qatar)": null  # seen 1x
+"SEI Ssd Assuring Cyberphysical Systems": null  # seen 1x
+"Residential Education": null  # seen 1x
+"SEI Financial and Business Services Management": null  # seen 1x
+"Computing Services (Qatar)": null  # seen 1x
+"SEI Ai Autonomy Lab": null  # seen 1x
+"SEI Ocos Transition Services": null  # seen 1x
+"Community Standards & Diversity Initiatives": null  # seen 1x
+"Office of Community Responsibility": null  # seen 1x
+"CIT Development and Govt Relations": null  # seen 1x
+"RWANDA - Information and Communication Technology": null  # seen 1x
+"Rwanda - ICT Pittsburgh": null  # seen 1x
+"Mscf Pittsburgh (Tepper)": null  # seen 1x
+"SEI CERT Tva Fo": null  # seen 1x
+"Osher Lifelong Learning Institute": null  # seen 1x
+"Provost Office Programs & Initiatives": null  # seen 1x
+"Admission (Qatar)": null  # seen 1x
+"Procurement Services": null  # seen 1x
+"Procurement and Payments": null  # seen 1x
+"Facilities (Qatar)": null  # seen 1x
+"Communications Design and Photography Grp": null  # seen 1x
+"Marketing & Media-Recharge Units": null  # seen 1x
+"CIT Community Engagement and Outreach": null  # seen 1x
+"Fms - New Employee Dev": null  # seen 1x
+"Avp-Development (Univ Advancement)": null  # seen 1x
+"Student Advisory Center": null  # seen 1x
+"SEI Ssd Engrg Intelligent Software Systems": null  # seen 1x
+"SEI Ssd Ainse Tactical & Ai Enabled Systems": null  # seen 1x
+"Tepper Entrepreneurial Center": null  # seen 1x
+"Research and Prospect Management (Univ Advancement": null  # seen 1x
+"Advancement Research (Univ Advancement)": null  # seen 1x
+"Printing & Publication Services": null  # seen 1x
+"Tartan Ink": null  # seen 1x
+"Operating Unit - Central Administration": null  # seen 1x
+"Dean's Office (Qatar)": null  # seen 1x
+"SEI Ai Advance Computing Lab": null  # seen 1x
+"University Libraries-Sustainability": null  # seen 1x
+"IT Service Desk (Comp Services)": null  # seen 1x
+"IT Support Services (Comp Services)": null  # seen 1x
+"Vice Provost for Teaching & Learning Innovation": null  # seen 1x
+"SEI CERT Mr Fo": null  # seen 1x
+"Ica Pittsburgh": null  # seen 1x
+"Senior Vice Provost Academic Initiatives": null  # seen 1x
+"Dietrich Dei Initiatives": null  # seen 1x
+"Dietrich Diversity Equity & Inclusion Initiatives": null  # seen 1x
+"Disability Resources": null  # seen 1x
+"FMS Operations": null  # seen 0x
+"HR Operations": null  # seen 0x
+"Cyert Center (HR)": null  # seen 0x

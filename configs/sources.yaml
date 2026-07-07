@@ -1,0 +1,108 @@
+# Data source endpoints and scraping policy.
+#
+# Verified 2026-06-13 (Task 0). Key facts discovered:
+#   - The SOC "complete schedule" is a nightly single-file HTML dump per cycle.
+#   - CMU REMOVED instructor and Bldg/Room columns starting with Fall 2025.
+#     Semesters <= S25 (via Wayback Machine snapshots) have both; F25/S26 don't.
+#   - Instructor strings are comma-joined LAST NAMES ("Taylor, Kosbie" = 2 people).
+#   - Course descriptions come from the official course catalog (see
+#     course_catalog below) — semester-independent, ~37 pages for the whole
+#     university. The SOC courseDetails endpoint also has descriptions but is
+#     per-course and only works for live semesters, so the catalog is primary.
+soc:
+  verified: true
+  complete_schedule:
+    spring: "https://enr-apps.as.cmu.edu/assets/SOC/sched_layout_spring.htm"
+    fall: "https://enr-apps.as.cmu.edu/assets/SOC/sched_layout_fall.htm"
+  # description source, live semesters only: ?COURSE=15112&SEMESTER=S26
+  course_details: "https://enr-apps.as.cmu.edu/open/SOC/SOCServlet/courseDetails"
+  # Per-semester source map. "live" = current nightly dump; otherwise a
+  # Wayback Machine timestamp of the same asset URL (id_ suffix = raw page).
+  semester_sources:
+    S26: { kind: live, cycle: spring } # no instructors/rooms
+    F25: { kind: wayback, cycle: fall, timestamp: "20250909001330" } # no instructors/rooms
+    S25: { kind: wayback, cycle: spring, timestamp: "20250425163527" } # full columns
+    F24: { kind: wayback, cycle: fall, timestamp: "20240727062615" } # full columns
+    # NB: the 20231205 snapshot is truncated (~half the depts); 20240610 is complete
+    S24: { kind: wayback, cycle: spring, timestamp: "20240610132604" } # full columns
+    F23: { kind: wayback, cycle: fall, timestamp: "20230903144728" } # full columns
+
+course_catalog:
+  # Canonical, semester-independent descriptions. Each department's /courses/
+  # page lists every course as a "courseblock": <dt>code title</dt><dd>units +
+  # description</dd>. ~37 pages cover the university (college-level pages
+  # aggregate sub-departments; dedupe by course_id).
+  #
+  # Regenerate course_pages by crawling /courses/ links from the catalog home
+  # ( / ) and /schools-colleges/ index.
+  base_url: "http://coursecatalog.web.cmu.edu"
+  course_pages:
+    - /aboutcmu/departmentofathleticsandphysicaleducation/courses/
+    - /aboutcmu/rotc/courses/
+    - /intercollegeprograms/bxaintercollege/courses/
+    - /intercollegeprograms/courses/
+    - /schools-colleges/collegeofengineering/courses/
+    - /schools-colleges/collegeofengineering/departmentofbiomedicalengineering/courses/
+    - /schools-colleges/collegeofengineering/departmentofchemicalengineering/courses/
+    - /schools-colleges/collegeofengineering/departmentofcivilandenvironmentalengineering/courses/
+    - /schools-colleges/collegeofengineering/departmentofelectricalandcomputerengineering/courses/
+    - /schools-colleges/collegeofengineering/departmentofengineeringandpublicpolicy/courses/
+    - /schools-colleges/collegeofengineering/departmentofmechanicalengineering/courses/
+    - /schools-colleges/collegeofengineering/materialsscienceandengineering/courses/
+    - /schools-colleges/collegeoffinearts/courses/
+    - /schools-colleges/collegeoffinearts/schoolofarchitecture/courses/
+    - /schools-colleges/collegeoffinearts/schoolofart/courses/
+    - /schools-colleges/collegeoffinearts/schoolofdesign/courses/
+    - /schools-colleges/collegeoffinearts/schoolofdrama/courses/
+    - /schools-colleges/collegeoffinearts/schoolofmusic/courses/
+    - /schools-colleges/dietrichcollegeofhumanitiesandsocialsciences/carnegiemelloninstituteforstrategyandtechnology/courses/
+    - /schools-colleges/dietrichcollegeofhumanitiesandsocialsciences/courses/
+    - /schools-colleges/dietrichcollegeofhumanitiesandsocialsciences/departmentofenglish/courses/
+    - /schools-colleges/dietrichcollegeofhumanitiesandsocialsciences/departmentofhistory/courses/
+    - /schools-colleges/dietrichcollegeofhumanitiesandsocialsciences/departmentoflanguagesculturesappliedlinguistics/courses/
+    - /schools-colleges/dietrichcollegeofhumanitiesandsocialsciences/departmentofphilosophy/courses/
+    - /schools-colleges/dietrichcollegeofhumanitiesandsocialsciences/departmentofpsychology/courses/
+    - /schools-colleges/dietrichcollegeofhumanitiesandsocialsciences/departmentofsocialanddecisionsciences/courses/
+    - /schools-colleges/dietrichcollegeofhumanitiesandsocialsciences/departmentofstatistics/courses/
+    - /schools-colleges/dietrichcollegeofhumanitiesandsocialsciences/informationsystems/courses/
+    - /schools-colleges/melloncollegeofscience/courses/
+    - /schools-colleges/melloncollegeofscience/departmentofbiologicalsciences/courses/
+    - /schools-colleges/melloncollegeofscience/departmentofchemistry/courses/
+    - /schools-colleges/melloncollegeofscience/departmentofmathematicalsciences/courses/
+    - /schools-colleges/melloncollegeofscience/departmentofphysics/courses/
+    - /schools-colleges/schoolofcomputerscience/addlmajorsminors/courses/
+    - /schools-colleges/schoolofcomputerscience/courses/
+    - /schools-colleges/tepper/undergraduatebusinessadministrationprogram/courses/
+    - /schools-colleges/tepper/undergraduateeconomicsprogram/courses/
+
+directory:
+  # CMU people directory — the resolution source for Week 4 faculty ER.
+  # Verified 2026-07-06 (Task 0). Key facts:
+  #   - Anonymous search is NAME-ONLY (search-by-department requires Shibboleth
+  #     login), via POST to /index.cgi. Basic form fields:
+  #       search=<name>&action=Search&searchtype=basic&activetab=basic
+  #   - Result shapes: 0 hits -> bare form page; 1 hit -> person detail page
+  #     directly (h1 id="listing"); >1 hits -> table id="sortabletable" with
+  #     Last | First | AndrewID | Affiliation | Department columns and a
+  #     per-person guid detail link (index.cgi?searchtype=guid&guid=...).
+  #   - HARD CAP: "You have reached the search limit of 200 results" — very
+  #     common surnames (Lee/Li/Wu/Zhang) are truncated; capped surnames are
+  #     flagged and routed to the manual-review queue.
+  #   - Advanced-search fields are whole-word matches (first_name=a matches
+  #     nothing), so a first-letter split can NOT beat the cap.
+  #   - Acceptable use (posted on every page): no mailing/solicitation use.
+  #     We store ONLY name, andrew_id, affiliation, HR job title, department,
+  #     and campus room — never email or phone.
+  base_url: "https://directory.andrew.cmu.edu"
+  search_endpoint: "/index.cgi"
+
+wayback_prefix: "http://web.archive.org/web"
+
+scraping:
+  user_agent: "latent-campus-research (rohanw2105@gmail.com)"
+  min_seconds_between_requests: 2.0
+  jitter_seconds: 0.5
+  timeout_seconds: 120 # web.archive.org can be slow on big assets
+  max_retries: 3
+
+campus_filter: "Pittsburgh, Pennsylvania" # exclude Qatar / remote sections
